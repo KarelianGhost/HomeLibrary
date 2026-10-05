@@ -1,0 +1,46 @@
+﻿@*
+
+*@
+@model string?
+
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('#editor-container');
+        if (!container) return;
+
+        // Инициализация Quill
+        const quill = new Quill('#editor-container', {
+            theme: 'snow',
+            placeholder: 'Введите оглавление…',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'indent': '-1' }, { 'indent': '+1' }],
+                    ['link', 'blockquote', 'code-block'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // Загружаем начальное содержимое
+        const initialHtml = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model ?? ""));
+        if (initialHtml) {
+            quill.clipboard.dangerouslyPasteHTML(initialHtml);
+        }
+
+        // Перед отправкой формы копируем HTML из Quill в скрытое поле
+        const form = container.closest('form');
+        const hidden = document.querySelector('#ContentsHtml');
+
+        if (form && hidden) {
+            form.addEventListener('submit', function () {
+                hidden.value = quill.root.innerHTML;
+            });
+        }
+    });
+</script>

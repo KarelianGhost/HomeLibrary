@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Добавить книгу";
+}
+
+<h1>Добавить книгу</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Название</label>
+        <input name="title" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Автор</label>
+        <select name="authorId" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Authors, "AuthorId", "FullName"))">
+            <option value="">— выберите автора —</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Год издания</label>
+        <input name="publishYear" class="form-control" type="number" required />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Издательство</label>
+        <input name="publisher" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">ISBN</label>
+        <input name="isbn" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Страниц</label>
+        <input name="pages" class="form-control" type="number" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Оглавление</label>
+        <div id="editor-container" style="height: 400px; background: #fff;"></div>
+        <input type="hidden" name="ContentsHtml" id="ContentsHtml" />
+    </div>
+
+    <button class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_QuillEditor" model="@((string?)null)" />
+}

@@ -1,0 +1,60 @@
+# Build results
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+[Oo]ut/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# User-specific files
+*.rsuser
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+*.nuget.props
+*.nuget.targets
+
+# .NET Core / ASP.NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.dbmdl
+*.jfm
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+appsettings.Development.local.json
+
+# OS
+.DS_Store
+Thumbs.db

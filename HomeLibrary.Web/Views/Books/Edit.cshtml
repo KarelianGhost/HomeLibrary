@@ -1,0 +1,56 @@
+﻿@model HomeLibrary.Application.Books.Dtos.BookDto
+@{
+    ViewData["Title"] = "Редактировать книгу";
+}
+
+<h1>Редактировать книгу</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="bookId" value="@Model.BookId" />
+
+    <div class="mb-3">
+        <label class="form-label">Название</label>
+        <input name="title" value="@Model.Title" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Автор</label>
+        <select name="authorId" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Authors, "AuthorId", "FullName", Model.AuthorId))">
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Год издания</label>
+        <input name="publishYear" value="@Model.PublishYear"
+               class="form-control" type="number" required />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Издательство</label>
+        <input name="publisher" value="@Model.Publisher" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">ISBN</label>
+        <input name="isbn" value="@Model.ISBN" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Страниц</label>
+        <input name="pages" value="@Model.Pages" class="form-control" type="number" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Оглавление</label>
+        <div id="editor-container" style="height: 400px; background: #fff;"></div>
+        <input type="hidden" name="ContentsHtml" id="ContentsHtml" />
+    </div>
+
+    <button class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_QuillEditor" model="@Model.Contents" />
+}

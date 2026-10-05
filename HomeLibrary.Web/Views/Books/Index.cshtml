@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HomeLibrary.Application.Books.Dtos.BookDto>
+@{
+    ViewData["Title"] = "Домашняя библиотека";
+}
+
+<h1>Мои книги</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input name="search" value="@ViewBag.Search" class="form-control"
+               placeholder="Поиск по названию или автору" />
+    </div>
+    <div class="col-auto"><button class="btn btn-primary">Найти</button></div>
+    <div class="col-auto"><a asp-action="Create" class="btn btn-success">Добавить</a></div>
+</form>
+
+<form method="get" asp-action="SearchInContents" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input name="keyword" class="form-control" placeholder="Поиск по оглавлению" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-outline-secondary">Искать в оглавлении</button>
+    </div>
+</form>
+
+@if (ViewBag.Keyword != null)
+{
+    <p class="text-muted">Поиск по оглавлению: «@ViewBag.Keyword»</p>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>Название</th><th>Автор</th><th>Год</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr>
+                <td>@b.Title</td>
+                <td>@b.Author</td>
+                <td>@b.PublishYear</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@b.BookId">Просмотр</a> |
+                    <a asp-action="Edit" asp-route-id="@b.BookId">Ред.</a> |
+                    <form asp-action="Delete" asp-route-id="@b.BookId" method="post"
+                          style="display:inline" onsubmit="return confirm('Удалить?');">
+                        <button class="btn btn-link p-0">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
